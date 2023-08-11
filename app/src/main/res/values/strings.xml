@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">YouTube</string>
+    <string name="tv_back">Back</string>
+    <string name="tv_playlist">Playlist</string>
+    <string name="tv_title">Title</string>
+    <string name="tv_description">Description</string>
+    <string name="tv_number_of_videos">Number of videos</string>
+    <string name="tv_try_again">Try again</string>
+    <string name="tv_video_name">Video Name</string>
+    <string name="tv_time">Time</string>
+    <string name="tv_self_care_before_child_care">Self Care Before Child Care</string>
+    <string name="tv_32_video_series">32 video series</string>
+</resources>
