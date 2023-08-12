@@ -1,6 +1,7 @@
 package com.example.youtube.ui.playlists
 
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -24,9 +25,9 @@ class PlaylistsActivity : BaseActivity<ActivityPlaylistsBinding, PlaylistsViewMo
 
     private fun onClick(playlist: Playlist.Item) {
         val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra(DESCRIPTION, playlist.snippet.description)
-        intent.putExtra(TITLE, playlist.snippet.title)
-        intent.putExtra(ID, playlist.id)
+        val bundle = Bundle()
+        bundle.putSerializable(ITEM_LIST,playlist)
+        intent.putExtras(bundle)
         startActivity(intent)
     }
 
@@ -39,7 +40,6 @@ class PlaylistsActivity : BaseActivity<ActivityPlaylistsBinding, PlaylistsViewMo
     override fun initViewModel() {
         super.initViewModel()
         viewModel.getPlaylists().observe(this) {
-            binding.recyclerView.adapter = adapter
             when(it.status){
                 Status.SUCCESS -> {
                     adapter.addList(it.data?.items as MutableList<Playlist.Item>)
@@ -54,7 +54,6 @@ class PlaylistsActivity : BaseActivity<ActivityPlaylistsBinding, PlaylistsViewMo
                     binding.progressBar.isVisible = true
                 }
             }
-            Log.e("ololo", "initViewModel: ${it}")
         }
     }
 
@@ -77,9 +76,7 @@ class PlaylistsActivity : BaseActivity<ActivityPlaylistsBinding, PlaylistsViewMo
     }
 
     companion object {
-        const val ID = "ID"
-        const val DESCRIPTION = "DESCRIPTION"
-        const val TITLE = "TITLE"
+        const val ITEM_LIST = "LIST"
     }
 
 }

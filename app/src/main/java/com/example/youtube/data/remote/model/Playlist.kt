@@ -1,5 +1,7 @@
 package com.example.youtube.data.remote.model
 
+import java.io.Serializable
+
 
 data class Playlist(
     val etag: String,
@@ -7,18 +9,18 @@ data class Playlist(
     val kind: String,
     val nextPageToken: String,
     val pageInfo: PageInfo
-) {
+):Serializable {
     data class Item(
         val contentDetails: ContentDetails,
         val etag: String,
         val id: String,
         val kind: String,
         val snippet: Snippet
-    ) {
+    ):Serializable {
         data class ContentDetails(
             val itemCount: Int,
             val videoId: String,
-        )
+        ):Serializable
 
         data class Snippet(
             val channelId: String,
@@ -28,11 +30,11 @@ data class Playlist(
             val publishedAt: String,
             val thumbnails: Thumbnails,
             val title: String
-        ) {
+        ):Serializable {
             data class Localized(
                 val description: String,
                 val title: String
-            )
+            ):Serializable
 
             data class Thumbnails(
                 val default: Default,
@@ -40,36 +42,36 @@ data class Playlist(
                 val maxres: Maxres,
                 val medium: Medium,
                 val standard: Standard
-            ) {
+            ):Serializable {
                 data class Default(
                     val height: Int,
                     val url: String,
                     val width: Int
-                )
+                ):Serializable
 
                 data class High(
                     val height: Int,
                     val url: String,
                     val width: Int
-                )
+                ):Serializable
 
                 data class Maxres(
                     val height: Int,
                     val url: String,
                     val width: Int
-                )
+                ):Serializable
 
                 data class Medium(
                     val height: Int,
                     val url: String,
                     val width: Int
-                )
+                ):Serializable
 
                 data class Standard(
                     val height: Int,
                     val url: String,
                     val width: Int
-                )
+                ):Serializable
             }
         }
     }
@@ -77,5 +79,5 @@ data class Playlist(
     data class PageInfo(
         val resultsPerPage: Int,
         val totalResults: Int
-    )
+    ):Serializable
 }

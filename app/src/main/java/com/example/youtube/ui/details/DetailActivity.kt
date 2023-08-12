@@ -1,5 +1,7 @@
 package com.example.youtube.ui.details
 
+import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -11,16 +13,13 @@ import com.example.youtube.data.remote.model.PlaylistItem
 import com.example.youtube.databinding.ActivityDetailBinding
 import com.example.youtube.ui.details.adapter.DetailAdapter
 import com.example.youtube.ui.details.viewModel.DetailViewModel
-import com.example.youtube.ui.playlists.PlaylistsActivity.Companion.DESCRIPTION
-import com.example.youtube.ui.playlists.PlaylistsActivity.Companion.ID
-import com.example.youtube.ui.playlists.PlaylistsActivity.Companion.TITLE
+import com.example.youtube.ui.playVideo.PlayVideoActivity
+import com.example.youtube.ui.playlists.PlaylistsActivity.Companion.ITEM_LIST
 import com.example.youtube.utils.ConnectionLiveData
 
 class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
 
-    private val getIntentId by lazy {   intent.getStringExtra(ID)}
-    private val getIntentDesc by lazy { intent.getStringExtra(DESCRIPTION)}
-    private val getIntentTitle by lazy { intent.getStringExtra(TITLE)}
+    private val modelPlaylist by lazy { intent.extras?.getSerializable(ITEM_LIST) as Playlist.Item }
     private val adapter by lazy { DetailAdapter(this::onClick) }
 
     override val viewModel: DetailViewModel by lazy {
@@ -28,24 +27,26 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     }
 
     private fun onClick(item: PlaylistItem.Item) {
-        Toast.makeText(this, "OLOLOLO", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, PlayVideoActivity::class.java)
+        val bundle= Bundle()
+        bundle.putSerializable(PLAYLIST_ITEM_KEY,item)
+        intent.putExtras(bundle)
+        startActivity(intent)
     }
 
     override fun initViewModel() {
         super.initViewModel()
-        viewModel.getPlaylistItem(getIntentId!!).observe(this) {
+        viewModel.getPlaylistItem(modelPlaylist.id).observe(this) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    binding.recyclerView.adapter = adapter
                     adapter.addList(it.data?.items as MutableList<Playlist.Item>)
-                    binding.tvDescription.text = getIntentDesc
-                    binding.tvTitle.text = getIntentTitle
+                    binding.tvDescription.text = modelPlaylist.snippet.description
+                    binding.tvTitle.text = modelPlaylist.snippet.title
                     binding.progressBar.isVisible = false
-                    Toast.makeText(this, "Request is success", Toast.LENGTH_SHORT).show()
+                    binding.tvVideoCount.text = "${modelPlaylist.contentDetails.itemCount} video"
                 }
 
                 Status.ERROR -> {
-                    Toast.makeText(this, "Request is failure", Toast.LENGTH_SHORT).show()
                     binding.progressBar.isVisible = false
                 }
 
@@ -62,6 +63,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             finish()
         }
         binding.recyclerView.adapter = adapter
+
     }
 
     override fun inflateViewBinding(): ActivityDetailBinding {
@@ -80,6 +82,10 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
                 initViewModel()
             }
         }
+    }
+
+    companion object{
+        const val PLAYLIST_ITEM_KEY = "playlistItem"
     }
 
 }

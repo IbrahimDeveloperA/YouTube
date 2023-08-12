@@ -1,40 +1,49 @@
 package com.example.youtube.data.remote.model
 
-data class Test(
+import java.io.Serializable
+
+data class Videos(
  val etag: String,
  val items: List<Item>,
  val kind: String,
  val pageInfo: PageInfo
-) {
+):Serializable {
  data class Item(
   val contentDetails: ContentDetails,
   val etag: String,
   val id: String,
   val kind: String,
   val snippet: Snippet
- ) {
+ ):Serializable {
   data class ContentDetails(
-   val videoId: String,
-   val videoPublishedAt: String
-  )
+   val caption: String,
+   val contentRating: ContentRating,
+   val definition: String,
+   val dimension: String,
+   val duration: String,
+   val licensedContent: Boolean,
+   val projection: String
+  ):Serializable {
+   class ContentRating
+  }
 
   data class Snippet(
+   val categoryId: String,
    val channelId: String,
    val channelTitle: String,
+   val defaultAudioLanguage: String,
    val description: String,
-   val playlistId: String,
-   val position: Int,
+   val liveBroadcastContent: String,
+   val localized: Localized,
    val publishedAt: String,
-   val resourceId: ResourceId,
+   val tags: List<String>,
    val thumbnails: Thumbnails,
-   val title: String,
-   val videoOwnerChannelId: String,
-   val videoOwnerChannelTitle: String
-  ) {
-   data class ResourceId(
-    val kind: String,
-    val videoId: String
-   )
+   val title: String
+  ):Serializable {
+   data class Localized(
+    val description: String,
+    val title: String
+   ):Serializable
 
    data class Thumbnails(
     val default: Default,
@@ -42,36 +51,36 @@ data class Test(
     val maxres: Maxres,
     val medium: Medium,
     val standard: Standard
-   ) {
+   ):Serializable {
     data class Default(
      val height: Int,
      val url: String,
      val width: Int
-    )
+    ):Serializable
 
     data class High(
      val height: Int,
      val url: String,
      val width: Int
-    )
+    ):Serializable
 
     data class Maxres(
      val height: Int,
      val url: String,
      val width: Int
-    )
+    ):Serializable
 
     data class Medium(
      val height: Int,
      val url: String,
      val width: Int
-    )
+    ):Serializable
 
     data class Standard(
      val height: Int,
      val url: String,
      val width: Int
-    )
+    ):Serializable
    }
   }
  }
@@ -79,5 +88,5 @@ data class Test(
  data class PageInfo(
   val resultsPerPage: Int,
   val totalResults: Int
- )
+ ):Serializable
 }
