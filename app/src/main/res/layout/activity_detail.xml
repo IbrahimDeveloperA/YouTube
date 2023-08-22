@@ -7,16 +7,33 @@
     android:orientation="vertical"
     tools:context=".ui.details.DetailActivity">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/no_connection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
 
-        <include
-            android:id="@+id/no_internet_connection_include"
-            layout="@layout/item_check_internet" />
-    </FrameLayout>
+        <ImageView
+            android:id="@+id/img_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/check_internet" />
+
+        <TextView
+            android:id="@+id/btn_try_again"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sp"
+            android:background="@color/red"
+            android:gravity="center"
+            android:padding="@dimen/_16sp"
+            android:text="@string/tv_try_again"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
         android:id="@+id/frame"
@@ -102,8 +119,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        app:cardCornerRadius="200dp"
-                        android:contentDescription="@string/app_name">
+                        android:contentDescription="@string/app_name"
+                        app:cardCornerRadius="200dp">
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/btn_play"

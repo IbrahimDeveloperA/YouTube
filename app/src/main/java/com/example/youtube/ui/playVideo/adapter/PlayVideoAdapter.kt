@@ -31,7 +31,8 @@ class PlayVideoAdapter: Adapter<PlayVideoAdapter.PlayVideoViewHolder>() {
 
     class PlayVideoViewHolder(private val binding:ItemVideoBinding):ViewHolder(binding.root) {
         fun onBind(item: Videos.Item) {
-            binding.imgView.loadImage(item.snippet.thumbnails.standard.url)
+          //  binding.icVideo = item.contentDetails.contentRat
+           // binding.imgView.loadImage(item.snippet.thumbnails.standard.url)
             binding.tvTitle.text = item.snippet.title
             binding.tvDesc.text = item.snippet.description
         }

@@ -23,6 +23,7 @@
             android:name=".ui.details.DetailActivity"
             android:exported="false" />
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
             android:name=".ui.playlists.PlaylistsActivity"
             android:exported="true">
             <intent-filter>

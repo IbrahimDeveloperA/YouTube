@@ -3,9 +3,7 @@ package com.example.youtube.ui.details
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import com.example.youtube.core.network.result.Status
 import com.example.youtube.core.ui.base.BaseActivity
 import com.example.youtube.data.remote.model.Playlist
@@ -16,20 +14,19 @@ import com.example.youtube.ui.details.viewModel.DetailViewModel
 import com.example.youtube.ui.playVideo.PlayVideoActivity
 import com.example.youtube.ui.playlists.PlaylistsActivity.Companion.ITEM_LIST
 import com.example.youtube.utils.ConnectionLiveData
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
 
     private val modelPlaylist by lazy { intent.extras?.getSerializable(ITEM_LIST) as Playlist.Item }
     private val adapter by lazy { DetailAdapter(this::onClick) }
 
-    override val viewModel: DetailViewModel by lazy {
-        ViewModelProvider(this)[DetailViewModel::class.java]
-    }
+    override val viewModel: DetailViewModel by viewModel()
 
     private fun onClick(item: PlaylistItem.Item) {
         val intent = Intent(this, PlayVideoActivity::class.java)
-        val bundle= Bundle()
-        bundle.putSerializable(PLAYLIST_ITEM_KEY,item)
+        val bundle = Bundle()
+        bundle.putSerializable(PLAYLIST_ITEM_KEY, item)
         intent.putExtras(bundle)
         startActivity(intent)
     }
@@ -74,8 +71,10 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
         super.isConnection()
         ConnectionLiveData(application).observe(this) {
             if (it) {
-                binding.internetConnection.visibility = View.VISIBLE
-                binding.noConnection.visibility = View.GONE
+                binding.btnTryAgain.setOnClickListener {
+                    binding.internetConnection.visibility = View.VISIBLE
+                    binding.noConnection.visibility = View.GONE
+                }
             } else {
                 binding.internetConnection.visibility = View.GONE
                 binding.noConnection.visibility = View.VISIBLE
@@ -84,7 +83,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
         }
     }
 
-    companion object{
+    companion object {
         const val PLAYLIST_ITEM_KEY = "playlistItem"
     }
 
