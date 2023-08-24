@@ -17,6 +17,7 @@
         android:theme="@style/Theme.YouTube"
         tools:targetApi="31">
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
             android:name=".ui.playVideo.PlayVideoActivity"
             android:exported="false" />
         <activity

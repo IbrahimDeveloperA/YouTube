@@ -21,7 +21,7 @@ class Repository(private val apiService: ApiService, private val dataSource: Rem
     }
 
 
-    fun getPlaylistItem(playlistItem: String): LiveData<Resource<PlaylistItem>> {
+    fun getPlaylistItem(playlistItem: String): LiveData<Resource<Playlist>> {
         return liveData(Dispatchers.IO) {
             emit(Resource.loading())
             val response = dataSource.getPlaylistItem(playlistItem)

@@ -23,7 +23,7 @@ class RemoteDataSource(private val apiService: ApiService) : BaseDataSource() {
         }
     }
 
-    suspend fun getPlaylistItem(playlistItem: String): Resource<PlaylistItem> {
+    suspend fun getPlaylistItem(playlistItem: String): Resource<Playlist> {
         return getResult {
             apiService.getPlaylistItems(BuildConfig.API_KEY, part = "snippet,contentDetails",
                 playlistId = playlistItem, maxResult = 10

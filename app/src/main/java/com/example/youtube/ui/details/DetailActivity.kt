@@ -23,7 +23,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
 
     override val viewModel: DetailViewModel by viewModel()
 
-    private fun onClick(item: PlaylistItem.Item) {
+    private fun onClick(item: Playlist.Item) {
         val intent = Intent(this, PlayVideoActivity::class.java)
         val bundle = Bundle()
         bundle.putSerializable(PLAYLIST_ITEM_KEY, item)

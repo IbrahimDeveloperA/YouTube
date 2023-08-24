@@ -9,13 +9,13 @@ import com.example.youtube.data.remote.model.PlaylistItem
 import com.example.youtube.databinding.ItemDetailBinding
 import com.example.youtube.utils.loadImage
 
-class DetailAdapter(private val onClick: (PlaylistItem.Item) -> Unit) :
+class DetailAdapter(private val onClick: (Playlist.Item) -> Unit) :
     Adapter<DetailAdapter.DetailViewHolder>() {
 
-    private var list = mutableListOf<PlaylistItem.Item>()
+    private var list = mutableListOf<Playlist.Item>()
 
     fun addList(list: List<Playlist.Item>) {
-        this.list = list as MutableList<PlaylistItem.Item>
+        this.list = list as MutableList<Playlist.Item>
         notifyDataSetChanged()
     }
 
@@ -37,7 +37,7 @@ class DetailAdapter(private val onClick: (PlaylistItem.Item) -> Unit) :
 
     inner class DetailViewHolder(private val binding: ItemDetailBinding) :
         ViewHolder(binding.root) {
-        fun onBind(item: PlaylistItem.Item) {
+        fun onBind(item: Playlist.Item) {
             binding.tvTime.text = item.kind ?: "Пусто"
             binding.tvVideoName.text = item.snippet.title ?: "Пусто"
             binding.ivVideo.loadImage(item.snippet.thumbnails.standard.url!!) ?: "Пусто"
